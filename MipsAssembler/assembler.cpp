@@ -1,14 +1,22 @@
 #include <iostream>
 #include "Getters.h"
+#include <fstream>
 using namespace std;
 
 int main() {
-	map<string, int> mapLabels = getLabels("code.asm");
-
-	// printando conteudo do map
-	
-	for (auto x:mapLabels) {
-		cout << x.first << " Linha: " << x.second << endl;
+	// imprimir a função da cada linha do arquivo
+	string file = "code.asm";
+	ifstream fin;
+	fin.open(file);
+	string line;
+	while (getline(fin, line)) {
+		// imprimir registradores
+		vector<int> registers = getRegister(line);
+		for (int i = 0; i < registers.size(); i++) {
+			cout << registers[i] << " ";
+		}
+	cout << endl;
 	}
+	fin.close();
 	return 0;
 }

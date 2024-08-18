@@ -127,11 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Conversor.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Getters.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assembler.cpp" />
+    <ClCompile Include="Conversor.cpp" />
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Getters.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
