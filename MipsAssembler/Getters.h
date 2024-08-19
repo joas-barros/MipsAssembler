@@ -6,14 +6,6 @@
 using namespace std;
 
 
-
-
-
-
-
-
-
-
 map<string, int> getLabels(string);
 
 string getFunction(string);
