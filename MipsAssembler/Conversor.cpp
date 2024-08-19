@@ -3,19 +3,13 @@
 string decimalToBinary(int number, int size)
 {
 	string binary = "";
-	for (int i = number; i > 0; i--)
-	{
-		if (i % 2 == 0) {
-			binary = "0" + binary;
-		}
-		else
-		{
-			binary = "1" + binary;
-		}
+	while (number > 0) {
+		binary = to_string(number % 2) + binary;
+		number /= 2;
 	}
-	while (binary.size() < size)
-	{
+	while (binary.length() < size) {
 		binary = "0" + binary;
 	}
 	return binary;
 }
+ 

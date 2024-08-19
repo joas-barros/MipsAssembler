@@ -1,22 +1,34 @@
 #include <iostream>
 #include "Getters.h"
+#include "Functions.h"
 #include <fstream>
 using namespace std;
 
 int main() {
 	// imprimir a função da cada linha do arquivo
-	string file = "code.asm";
+	string file = "exemple.asm";
+
+	map<string, int> labels = getLabels(file);
+
+	// retirar a extensão do arquivo
+	string out = file.substr(0, file.find("."));
+	out += ".bin";
+
+	ofstream fout;
+	fout.open(out);
+
 	ifstream fin;
 	fin.open(file);
+
+
+
 	string line;
 	while (getline(fin, line)) {
-		// imprimir registradores
-		vector<int> registers = getRegister(line);
-		for (int i = 0; i < registers.size(); i++) {
-			cout << registers[i] << " ";
-		}
-	cout << endl;
+		fout << assembling(line);
 	}
+
 	fin.close();
+	fout.close();
+	cout << "Arquivo gerado com sucesso!" << endl;
 	return 0;
 }
