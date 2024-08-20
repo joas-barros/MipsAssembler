@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Getters.h"
 #include "Functions.h"
+#include "instructions.h"
 #include <fstream>
 using namespace std;
 
@@ -20,7 +21,7 @@ int main() {
 	ifstream fin;
 	fin.open(file);
 
-
+	int cpim = cpiMed(5);
 
 	string line;
 	string lineWithoutComents;

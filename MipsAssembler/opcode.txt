@@ -1,0 +1,11 @@
+beq 4
+bne 5
+addi 8
+addiu 9
+slti 10
+sltiu 11
+andi 12
+ori 13
+lui 15
+lw 35
+sw 43
