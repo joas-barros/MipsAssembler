@@ -116,3 +116,8 @@ int getImediate(string line) {
 	return 0;
 }
 
+string ignoreComents(string line) {
+	regex COMMENT("#.*");
+	return regex_replace(line, COMMENT, "");
+}
+

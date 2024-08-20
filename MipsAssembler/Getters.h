@@ -13,3 +13,5 @@ string getFunction(string);
 vector<int> getRegister(string);
 
 int getImediate(string);
+
+string ignoreComents(string);
