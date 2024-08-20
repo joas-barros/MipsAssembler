@@ -24,6 +24,9 @@
     <ClInclude Include="Conversor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="instructions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Getters.cpp">
@@ -38,5 +41,24 @@
     <ClCompile Include="Functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="instructions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="code.asm">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="cpi.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="exemple.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="opcode.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

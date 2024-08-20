@@ -130,12 +130,22 @@
     <ClInclude Include="Conversor.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Getters.h" />
+    <ClInclude Include="instructions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assembler.cpp" />
     <ClCompile Include="Conversor.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Getters.cpp" />
+    <ClCompile Include="instructions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="code.asm" />
+    <None Include="cpi.csv" />
+    <None Include="exemple.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="opcode.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
