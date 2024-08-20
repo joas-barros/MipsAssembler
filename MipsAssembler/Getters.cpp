@@ -121,3 +121,13 @@ string ignoreComents(string line) {
 	return regex_replace(line, COMMENT, "");
 }
 
+string getLastWord(string line) {
+	regex LASTWORD("\\w+$");
+	smatch match;
+	regex_search(line, match, LASTWORD);
+	if (match.size() > 0) {
+		return match.str(0);
+	}
+	return "";
+}
+

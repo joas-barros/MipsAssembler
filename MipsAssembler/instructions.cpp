@@ -2,7 +2,7 @@
 #include "Getters.h"
 #include <iostream>
 #include <fstream>
-
+using namespace std;
 
 ifstream fin;
 ofstream fout;
@@ -31,10 +31,10 @@ string typeI(string nameOP, /*map<string, unsigned int>*/ int rs, /*map<string, 
         }
     }
 
-    string binaryOP = std::bitset<6>(opI[i].value).to_string();
-    string binaryRS = std::bitset<5>(rs).to_string();
-    string binaryRT = std::bitset<5>(rt).to_string();
-    string binaryAD = std::bitset<16>(address).to_string();
+    string binaryOP = bitset<6>(opI[i].value).to_string();
+    string binaryRS = bitset<5>(rs).to_string();
+    string binaryRT = bitset<5>(rt).to_string();
+    string binaryAD = bitset<16>(address).to_string();
 
     string binary;
 
@@ -52,14 +52,14 @@ string typeJ(string nameOP, unsigned int address)
 
     if (nameOP == "jal")
     {
-        binaryOP = std::bitset<6>(3).to_string();
+        binaryOP = bitset<6>(3).to_string();
     }
     else 
     {
-        binaryOP = std::bitset<6>(2).to_string();
+        binaryOP = bitset<6>(2).to_string();
     }
 
-    string binaryAD = std::bitset<26>(address).to_string();
+    string binaryAD = bitset<26>(address).to_string();
 
     binary.append(binaryOP);
     binary.append(binaryAD);
@@ -67,7 +67,7 @@ string typeJ(string nameOP, unsigned int address)
     return binary;
 }
 
-int cpiMed(int n)
+int cpiMed(int n, string fileName)
 {
     cpi informationCPI[] = { {"sll",0,0},{"srl",0,0},{"jr",0,0},{"mfhi",0,0},{"mflo",0,0},{"mult",0,0},{"multu",0,0},{"div",0,0},{"divu",0,0},
         {"add",0,0},{"addu",0,0},{"sub",0,0},{"subu",0,0},{"and",0,0},{"or",0,0},{"slt",0,0},{"sltu",0,0},{"mul",0,0},{"beq",0,0},
@@ -100,7 +100,7 @@ int cpiMed(int n)
     string line;
     vector<string> nameInst;
 
-    fin.open("code.asm");
+    fin.open(fileName);
     if (!fin.is_open())
     {
         cout << "Abertura do .asm falhou!";
@@ -141,8 +141,8 @@ int cpiMed(int n)
 
 string convertToHexa(string bin) {
 
-    std::bitset<32> set(bin);
-    std::stringstream res;
+    bitset<32> set(bin);
+    stringstream res;
     
     res << hex << uppercase << set.to_ulong();
 

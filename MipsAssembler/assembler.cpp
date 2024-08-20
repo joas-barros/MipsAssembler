@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
 	// imprimir a função da cada linha do arquivo
-	string file = "teste.txt";
+	string file = "code.asm";
 
 	map<string, int> labels = getLabels(file);
 
@@ -21,13 +21,13 @@ int main() {
 	ifstream fin;
 	fin.open(file);
 
-	int cpim = cpiMed(5);
+	int cpim = cpiMed(5, file);
 
 	string line;
 	string lineWithoutComents;
 	while (getline(fin, line)) {
 		lineWithoutComents = ignoreComents(line);
-		fout << assembling(lineWithoutComents);
+		fout << assembling(lineWithoutComents, labels) << endl;
 	}
 
 	fin.close();

@@ -1,5 +1,7 @@
 #include "Functions.h"
 #include "Conversor.h"
+#include "Getters.h"
+#include "instructions.h"
 
 map<string, Func> functionsMap = {
 	{"sll", {R, 0, 0, 0, 0, 0, 0}},
@@ -31,7 +33,7 @@ string bitRFunction(Func function) {
 	string shamt = decimalToBinary(function.shamt, 5);
 	string funct = decimalToBinary(function.funct, 6);
 
-	return op + rs + rt + rd + shamt + funct + "\n";
+	return op + rs + rt + rd + shamt + funct;
 }
 
 Func treatingRFunction(string line) {
@@ -70,12 +72,46 @@ Func treatingRFunction(string line) {
 	return function;
 }
 
-string assembling(string line)
+string assembling(string line, map<string, int> labels)
 {
 	string funcName = getFunction(line);
 
-	if (functionsMap[funcName].type == R)
+	if (functionsMap.find(funcName) != functionsMap.end())
 		return bitRFunction(treatingRFunction(line));
-	else
-		return "";
+	else if (funcName == "j" || funcName == "jal")
+	{
+		string label = getLastWord(line);
+		int address = labels[label];
+		return typeJ(funcName, address);
+	}
+	else {
+		vector<int> registers = getRegister(line);
+		if (funcName == "beq" || funcName == "bne")
+		{
+			int rs = registers[0];
+			int rt = registers[1];
+			int address = labels[getLastWord(line)];
+			return typeI(funcName, rs, rt, address);
+		}
+		else if (funcName == "addi" || funcName == "addiu" || funcName == "andi" || funcName == "ori" || funcName == "slti" || funcName == "sltiu")
+		{
+			int rt = registers[0];
+			int rs = registers[1];
+			int imediate = getImediate(line);
+			return typeI(funcName, rs, rt, imediate);
+		}
+		else if (funcName == "lui")
+		{
+			int rt = registers[0];
+			int imediate = getImediate(line);
+			return typeI(funcName, 0, rt, imediate);
+		}
+		else if (funcName == "lw" || funcName == "sw")
+		{
+			int rt = registers[0];
+			int rs = registers[1];
+			int imediate = getImediate(line);
+			return typeI(funcName, rs, rt, imediate);
+		}
+	}
 }
