@@ -4,71 +4,11 @@
 #include <fstream>
 using namespace std;
 
-ifstream fin;
-ofstream fout;
 
-string typeI(string nameOP, int rs, int rt, unsigned short address)
-{
-    opcode opI[11]; int i = 0;
-    fin.open("opcode.txt");
-    if (!fin.is_open())
-    {
-        cout << "Abertura do .txt falhou!";
-        exit(EXIT_FAILURE);
-    }
-
-    for (int i = 0; i < 11; i++)
-    {
-        fin >> opI[i].name;
-        fin >> opI[i].value;
-    }
-    fin.close();
-
-    for (int j = 0; j < 11; j++)
-    {
-        if(nameOP == opI[j].name) {
-            i = j;
-        }
-    }
-
-    string binaryOP = bitset<6>(opI[i].value).to_string();
-    string binaryRS = bitset<5>(rs).to_string();
-    string binaryRT = bitset<5>(rt).to_string();
-    string binaryAD = bitset<16>(address).to_string();
-
-    string binary;
-
-    binary.append(binaryOP);
-    binary.append(binaryRS);
-    binary.append(binaryRT);
-    binary.append(binaryAD);
-
-    return binary;
-}
-
-string typeJ(string nameOP, unsigned int address)
-{ 
-    string binary, binaryOP;
-
-    if (nameOP == "jal")
-    {
-        binaryOP = bitset<6>(3).to_string();
-    }
-    else 
-    {
-        binaryOP = bitset<6>(2).to_string();
-    }
-
-    string binaryAD = bitset<26>(address).to_string();
-
-    binary.append(binaryOP);
-    binary.append(binaryAD);
-
-    return binary;
-}
 
 void cpiMed(string fileName)
 {
+    ifstream fin;
     cpi informationCPI[] = { {"sll",0,0},{"srl",0,0},{"jr",0,0},{"mfhi",0,0},{"mflo",0,0},{"mult",0,0},{"multu",0,0},{"div",0,0},{"divu",0,0},
         {"add",0,0},{"addu",0,0},{"sub",0,0},{"subu",0,0},{"and",0,0},{"or",0,0},{"slt",0,0},{"sltu",0,0},{"mul",0,0},{"beq",0,0},
         {"bne",0,0},{"addi",0,0},{"addiu",0,0},{"slti",0,0},{"sltiu",0,0},{"andi",0,0},{"ori",0,0},{"lui",0,0},{"lw",0,0},{"sw",0,0},
