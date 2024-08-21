@@ -27,6 +27,9 @@
     <ClInclude Include="instructions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Choice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Getters.cpp">
@@ -44,6 +47,9 @@
     <ClCompile Include="instructions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Choice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="code.asm">
@@ -56,6 +62,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="code2.asm">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="teste.asm">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
