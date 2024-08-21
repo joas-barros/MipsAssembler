@@ -138,13 +138,3 @@ int cpiMed(int n, string fileName)
 
     return cpi;
 }
-
-string convertToHexa(string bin) {
-
-    bitset<32> set(bin);
-    stringstream res;
-    
-    res << hex << uppercase << set.to_ulong();
-
-    return res.str();
-}

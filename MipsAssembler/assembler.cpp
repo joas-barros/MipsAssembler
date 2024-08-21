@@ -13,7 +13,7 @@ int main() {
 
 	// retirar a extensão do arquivo
 	string out = file.substr(0, file.find("."));
-	out += ".bin";
+	out += ".hex";
 
 	ofstream fout;
 	fout.open(out);
@@ -30,7 +30,7 @@ int main() {
 	while (getline(fin, line)) {
 		currentLine++;
 		lineWithoutComents = ignoreComents(line);
-		fout << assembling(lineWithoutComents, labels, currentLine) << endl;
+		fout << assemblingHexa(lineWithoutComents, labels, currentLine) << endl;
 	}
 
 	fin.close();

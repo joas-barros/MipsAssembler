@@ -30,3 +30,5 @@ string bitRFunction(Func);
 
 string assembling(string, map<string, int>, int);
 
+string assemblingHexa(string, map<string, int>, int);
+
