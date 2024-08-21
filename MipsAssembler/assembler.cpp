@@ -21,8 +21,6 @@ int main() {
 	ifstream fin;
 	fin.open(file);
 
-	int cpim = cpiMed(5);
-
 	string line;
 	while (getline(fin, line)) {
 		fout << assembling(line);

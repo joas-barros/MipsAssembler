@@ -67,7 +67,7 @@ string typeJ(string nameOP, unsigned int address)
     return binary;
 }
 
-int cpiMed(int n)
+void cpiMed(void)
 {
     cpi informationCPI[] = { {"sll",0,0},{"srl",0,0},{"jr",0,0},{"mfhi",0,0},{"mflo",0,0},{"mult",0,0},{"multu",0,0},{"div",0,0},{"divu",0,0},
         {"add",0,0},{"addu",0,0},{"sub",0,0},{"subu",0,0},{"and",0,0},{"or",0,0},{"slt",0,0},{"sltu",0,0},{"mul",0,0},{"beq",0,0},
@@ -83,6 +83,7 @@ int cpiMed(int n)
 
     string nameInstru;
     fin >> nameInstru;
+    fin.ignore(1);
     
     while (getline(fin, nameInstru, ',')) {
         for (int i = 0; i < 31; i++)
@@ -100,7 +101,7 @@ int cpiMed(int n)
     string line;
     vector<string> nameInst;
 
-    fin.open("code.asm");
+    fin.open("code2.asm");
     if (!fin.is_open())
     {
         cout << "Abertura do .asm falhou!";
@@ -121,8 +122,10 @@ int cpiMed(int n)
     }
     fin.close();
 
+    int totalInstru = nameInst.size();
+
     int cpi, sum = 0, eq; 
-    for (int j = 0; j < n; j++)
+    for (int j = 0; j < totalInstru; j++)
     {
         for (int i = 0; i < 31; i++)
         {
@@ -134,9 +137,19 @@ int cpiMed(int n)
         }
         sum += eq;
     }
-    cpi = sum / n;
+    cpi = sum / totalInstru;
 
-    return cpi;
+    cout << "Quantidades por tipo de instruções: " << endl;
+    for (int i = 0; i < totalInstru; i++)
+    {
+        for (int j = 0; j < 31; j++) {
+            if (nameInst[i] == informationCPI[j].name)
+            {
+                cout << informationCPI[j].name << ": " << informationCPI[j].quantity << endl;
+            }
+        }
+    }
+    cout << "\nCPI médio: " << cpi;
 }
 
 string convertToHexa(string bin) {
