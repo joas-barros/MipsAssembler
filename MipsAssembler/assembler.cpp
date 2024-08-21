@@ -25,9 +25,12 @@ int main() {
 
 	string line;
 	string lineWithoutComents;
+	int currentLine = 0;
+
 	while (getline(fin, line)) {
+		currentLine++;
 		lineWithoutComents = ignoreComents(line);
-		fout << assembling(lineWithoutComents, labels) << endl;
+		fout << assembling(lineWithoutComents, labels, currentLine) << endl;
 	}
 
 	fin.close();

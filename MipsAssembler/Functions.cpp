@@ -3,6 +3,8 @@
 #include "Getters.h"
 #include "instructions.h"
 
+const int initialAddress = 0x00400000;
+
 map<string, Func> functionsMap = {
 	{"sll", {R, 0, 0, 0, 0, 0, 0}},
 	{"srl", {R, 0, 0, 0, 0, 0, 2}},
@@ -72,7 +74,7 @@ Func treatingRFunction(string line) {
 	return function;
 }
 
-string assembling(string line, map<string, int> labels)
+string assembling(string line, map<string, int> labels, int currentLine)
 {
 	string funcName = getFunction(line);
 
@@ -81,7 +83,10 @@ string assembling(string line, map<string, int> labels)
 	else if (funcName == "j" || funcName == "jal")
 	{
 		string label = getLastWord(line);
-		int address = labels[label];
+		int labelAddress = labels[label];
+
+		int address = labelAddress + initialAddress / 4;
+
 		return typeJ(funcName, address);
 	}
 	else {
@@ -90,7 +95,8 @@ string assembling(string line, map<string, int> labels)
 		{
 			int rs = registers[0];
 			int rt = registers[1];
-			int address = labels[getLastWord(line)];
+			int labelAddress = labels[getLastWord(line)];
+			int address = labelAddress - currentLine;
 			return typeI(funcName, rs, rt, address);
 		}
 		else if (funcName == "addi" || funcName == "addiu" || funcName == "andi" || funcName == "ori" || funcName == "slti" || funcName == "sltiu")
