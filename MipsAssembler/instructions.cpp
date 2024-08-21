@@ -7,7 +7,7 @@ using namespace std;
 ifstream fin;
 ofstream fout;
 
-string typeI(string nameOP, /*map<string, unsigned int>*/ int rs, /*map<string, unsigned int>*/ int rt, unsigned short address)
+string typeI(string nameOP, int rs, int rt, unsigned short address)
 {
     opcode opI[11]; int i = 0;
     fin.open("opcode.txt");
@@ -67,8 +67,7 @@ string typeJ(string nameOP, unsigned int address)
     return binary;
 }
 
-
-void cpiMed(void)
+void cpiMed(string fileName)
 {
     cpi informationCPI[] = { {"sll",0,0},{"srl",0,0},{"jr",0,0},{"mfhi",0,0},{"mflo",0,0},{"mult",0,0},{"multu",0,0},{"div",0,0},{"divu",0,0},
         {"add",0,0},{"addu",0,0},{"sub",0,0},{"subu",0,0},{"and",0,0},{"or",0,0},{"slt",0,0},{"sltu",0,0},{"mul",0,0},{"beq",0,0},
@@ -102,7 +101,7 @@ void cpiMed(void)
     string line;
     vector<string> nameInst;
 
-    fin.open("code2.asm");
+    fin.open(fileName);
     if (!fin.is_open())
     {
         cout << "Abertura do .asm falhou!";
