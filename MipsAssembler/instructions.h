@@ -20,7 +20,7 @@ struct cpi
 };
 
 
-string typeI(string, /*map<string, unsigned int>*/ int ,/* map<string, unsigned int>*/ int, unsigned short);
+string typeI(string,int, int, unsigned short);
 string typeJ(string, unsigned int);
-void cpiMed(void);
+void cpiMed(string);
 string convertToHexa(string);
