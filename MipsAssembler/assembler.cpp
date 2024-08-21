@@ -7,13 +7,13 @@ using namespace std;
 
 int main() {
 	// imprimir a função da cada linha do arquivo
-	string file = "code.asm";
+	string file = "TesteSilvio.asm";
 
 	map<string, int> labels = getLabels(file);
 
 	// retirar a extensão do arquivo
 	string out = file.substr(0, file.find("."));
-	out += ".hex";
+	out += ".bin";
 
 	ofstream fout;
 	fout.open(out);
@@ -30,7 +30,7 @@ int main() {
 	while (getline(fin, line)) {
 		currentLine++;
 		lineWithoutComents = ignoreComents(line);
-		fout << assemblingHexa(lineWithoutComents, labels, currentLine) << endl;
+		fout << assembling(lineWithoutComents, labels, currentLine) << endl;
 	}
 
 	fin.close();

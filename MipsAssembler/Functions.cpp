@@ -27,6 +27,7 @@ map<string, Func> functionsMap = {
 	{"mul", {R, 28, 0, 0, 0, 0, 2}}
 };
 
+
 string bitRFunction(Func function) {
 	string op = decimalToBinary(function.opCode, 6);
 	string rs = decimalToBinary(function.rs, 5);

@@ -122,7 +122,7 @@ string ignoreComents(string line) {
 }
 
 string getLastWord(string line) {
-	regex LASTWORD("\\w+$");
+	regex LASTWORD("\\b\\w+\\b(?=\\s*$)");
 	smatch match;
 	regex_search(line, match, LASTWORD);
 	if (match.size() > 0) {
