@@ -104,7 +104,7 @@ string assembling(string line, map<string, int> labels, int currentLine)
 			int rs = registers[0];
 			int rt = registers[1];
 			int labelAddress = labels[getLastWord(line)];
-			int address = labelAddress - currentLine;
+			int address = labelAddress - (currentLine + 1);
 			return typeI(funcName, rs, rt, address);
 		}
 		else if (funcName == "addi" || funcName == "addiu" || funcName == "andi" || funcName == "ori" || funcName == "slti" || funcName == "sltiu")

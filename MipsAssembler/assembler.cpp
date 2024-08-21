@@ -23,15 +23,17 @@ int main() {
 
 	int cpim = cpiMed(5, file);
 
-	string line;
-	string lineWithoutComents;
+	string line, lineWithoutComents, assembledLine;
 	int currentLine = 0;
 
 	while (getline(fin, line)) {
-		currentLine++;
-		lineWithoutComents = ignoreComents(line);
-		if (lineWithoutComents != "")
-			fout << assembling(lineWithoutComents, labels, currentLine) << endl;
+		
+		lineWithoutComents = ignoreEmptySpaces(ignoreComents(line));
+		assembledLine = assembling(lineWithoutComents, labels, currentLine);
+		if (assembledLine != "") {
+			currentLine++;
+			fout << assembledLine << endl;
+		}
 	}
 
 	fin.close();
