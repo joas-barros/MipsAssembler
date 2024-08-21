@@ -3,5 +3,4 @@
 #include <sstream>
 using namespace std;
 
-string decimalToBinary(int, int);
 string convertToHexa(string);

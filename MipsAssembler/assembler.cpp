@@ -2,42 +2,25 @@
 #include "Getters.h"
 #include "Functions.h"
 #include "instructions.h"
+#include "Choice.h"
 #include <fstream>
 using namespace std;
 
-int main() {
-	// imprimir a função da cada linha do arquivo
-	string file = "TesteSilvio.asm";
-
-	map<string, int> labels = getLabels(file);
-
-	// retirar a extensão do arquivo
-	string out = file.substr(0, file.find("."));
-	out += ".bin";
-
-	ofstream fout;
-	fout.open(out);
-
-	ifstream fin;
-	fin.open(file);
-
-
-
-	string line, lineWithoutComents, assembledLine;
-	int currentLine = 0;
-
-	while (getline(fin, line)) {
-		
-		lineWithoutComents = ignoreEmptySpaces(ignoreComents(line));
-		assembledLine = assembling(lineWithoutComents, labels, currentLine);
-		if (assembledLine != "") {
-			currentLine++;
-			fout << assembledLine << endl;
-		}
+int main(int argc, char** argv) {
+	
+	string filename = argv[1];
+	if (strcmp(argv[2], "-b") == 0) {
+		choiceB(filename);
+	}
+	else if (strcmp(argv[2], "-h") == 0) {
+		choiceH(filename);
+	}
+	else{
+		cout << "Invalid choice" << endl;
+		return 0;
 	}
 
-	fin.close();
-	fout.close();
-	cout << "Arquivo gerado com sucesso!" << endl;
+	cpiMed(filename);
+
 	return 0;
 }

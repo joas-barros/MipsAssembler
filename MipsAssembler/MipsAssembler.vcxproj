@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/execution-charset:.850 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Choice.h" />
     <ClInclude Include="Conversor.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Getters.h" />
@@ -134,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assembler.cpp" />
+    <ClCompile Include="Choice.cpp" />
     <ClCompile Include="Conversor.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Getters.cpp" />
@@ -144,6 +147,7 @@
     <None Include="code2.asm" />
     <None Include="cpi.csv" />
     <None Include="exemple.bin" />
+    <None Include="teste.asm" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="opcode.txt" />
