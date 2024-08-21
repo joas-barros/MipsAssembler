@@ -2,7 +2,7 @@
 #include "Getters.h"
 #include <iostream>
 #include <fstream>
-
+using namespace std;
 
 ifstream fin;
 ofstream fout;
@@ -31,10 +31,10 @@ string typeI(string nameOP, /*map<string, unsigned int>*/ int rs, /*map<string, 
         }
     }
 
-    string binaryOP = std::bitset<6>(opI[i].value).to_string();
-    string binaryRS = std::bitset<5>(rs).to_string();
-    string binaryRT = std::bitset<5>(rt).to_string();
-    string binaryAD = std::bitset<16>(address).to_string();
+    string binaryOP = bitset<6>(opI[i].value).to_string();
+    string binaryRS = bitset<5>(rs).to_string();
+    string binaryRT = bitset<5>(rt).to_string();
+    string binaryAD = bitset<16>(address).to_string();
 
     string binary;
 
@@ -52,20 +52,21 @@ string typeJ(string nameOP, unsigned int address)
 
     if (nameOP == "jal")
     {
-        binaryOP = std::bitset<6>(3).to_string();
+        binaryOP = bitset<6>(3).to_string();
     }
     else 
     {
-        binaryOP = std::bitset<6>(2).to_string();
+        binaryOP = bitset<6>(2).to_string();
     }
 
-    string binaryAD = std::bitset<26>(address).to_string();
+    string binaryAD = bitset<26>(address).to_string();
 
     binary.append(binaryOP);
     binary.append(binaryAD);
 
     return binary;
 }
+
 
 void cpiMed(void)
 {
@@ -139,7 +140,7 @@ void cpiMed(void)
     }
     cpi = sum / totalInstru;
 
-    cout << "Quantidades por tipo de instruções: " << endl;
+    cout << "Quantidades por tipo de instruÃ§Ãµes: " << endl;
     for (int i = 0; i < totalInstru; i++)
     {
         for (int j = 0; j < 31; j++) {
@@ -149,15 +150,5 @@ void cpiMed(void)
             }
         }
     }
-    cout << "\nCPI médio: " << cpi;
-}
-
-string convertToHexa(string bin) {
-
-    std::bitset<32> set(bin);
-    std::stringstream res;
-    
-    res << hex << uppercase << set.to_ulong();
-
-    return res.str();
+    cout << "\nCPI mÃ©dio: " << cpi;
 }

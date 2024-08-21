@@ -1,5 +1,9 @@
 #include "Functions.h"
 #include "Conversor.h"
+#include "Getters.h"
+#include "instructions.h"
+
+const int initialAddress = 0x00400000;
 
 map<string, Func> functionsMap = {
 	{"sll", {R, 0, 0, 0, 0, 0, 0}},
@@ -23,6 +27,10 @@ map<string, Func> functionsMap = {
 	{"mul", {R, 28, 0, 0, 0, 0, 2}}
 };
 
+const vector<string> typeJInstructions = { "j", "jal" };
+const vector<string> typeIInstructions = { "beq", "bne", "addi", "addiu", "andi", "ori", "slti", "sltiu", "lui", "lw", "sw" };
+
+
 string bitRFunction(Func function) {
 	string op = decimalToBinary(function.opCode, 6);
 	string rs = decimalToBinary(function.rs, 5);
@@ -31,7 +39,7 @@ string bitRFunction(Func function) {
 	string shamt = decimalToBinary(function.shamt, 5);
 	string funct = decimalToBinary(function.funct, 6);
 
-	return op + rs + rt + rd + shamt + funct + "\n";
+	return op + rs + rt + rd + shamt + funct;
 }
 
 Func treatingRFunction(string line) {
@@ -70,12 +78,59 @@ Func treatingRFunction(string line) {
 	return function;
 }
 
-string assembling(string line)
+string assembling(string line, map<string, int> labels, int currentLine)
 {
 	string funcName = getFunction(line);
 
-	if (functionsMap[funcName].type == R)
-		return bitRFunction(treatingRFunction(line));
-	else
+	// se o que achar não for uma função
+	if (functionsMap.find(funcName) == functionsMap.end() && find(typeJInstructions.begin(), typeJInstructions.end(), funcName) == typeJInstructions.end() && find(typeIInstructions.begin(), typeIInstructions.end(), funcName) == typeIInstructions.end())
 		return "";
+
+	if (functionsMap.find(funcName) != functionsMap.end())
+		return bitRFunction(treatingRFunction(line));
+	else if (funcName == "j" || funcName == "jal")
+	{
+		string label = getLastWord(line);
+		int labelAddress = labels[label];
+
+		int address = labelAddress + initialAddress / 4;
+
+		return typeJ(funcName, address);
+	}
+	else {
+		vector<int> registers = getRegister(line);
+		if (funcName == "beq" || funcName == "bne")
+		{
+			int rs = registers[0];
+			int rt = registers[1];
+			int labelAddress = labels[getLastWord(line)];
+			int address = labelAddress - (currentLine + 1);
+			return typeI(funcName, rs, rt, address);
+		}
+		else if (funcName == "addi" || funcName == "addiu" || funcName == "andi" || funcName == "ori" || funcName == "slti" || funcName == "sltiu")
+		{
+			int rt = registers[0];
+			int rs = registers[1];
+			int imediate = getImediate(line);
+			return typeI(funcName, rs, rt, imediate);
+		}
+		else if (funcName == "lui")
+		{
+			int rt = registers[0];
+			int imediate = getImediate(line);
+			return typeI(funcName, 0, rt, imediate);
+		}
+		else if (funcName == "lw" || funcName == "sw")
+		{
+			int rt = registers[0];
+			int rs = registers[1];
+			int imediate = getImediate(line);
+			return typeI(funcName, rs, rt, imediate);
+		}
+	}
+}
+
+string assemblingHexa(string line, map<string, int> labels, int currentLine) {
+	string binary = assembling(line, labels, currentLine);
+	return convertToHexa(binary);
 }

@@ -6,16 +6,21 @@ map<string, int> getLabels(string codeName) {
 	map<string, int> labels;
 	ifstream codeFile;
 	codeFile.open(codeName);
-	string line;
+	string codeLine;
 	int lineNum = 0;
-	while(getline(codeFile, line)){
+	while(getline(codeFile, codeLine)){
+
+		string line = ignoreComents(codeLine);
 		// usando regex para pegar o label
 		smatch match;
 		regex_search(line, match, LABEL);
 		if(match.size() > 0){
 			labels[match.str(1)] = lineNum;
+			lineNum++;
 		}
-		lineNum++;
+		else if (getFunction(line) != "") {
+			lineNum++;
+		}
 	}
 	codeFile.close();
 	return labels;
@@ -114,5 +119,30 @@ int getImediate(string line) {
 		return stoi(match[0]);
 	}
 	return 0;
+}
+
+string ignoreComents(string line) {
+	regex COMMENT("#.*");
+	return regex_replace(line, COMMENT, "");
+}
+
+string getLastWord(string line) {
+	regex LASTWORD("\\b\\w+\\b(?=\\s*$)");
+	smatch match;
+	regex_search(line, match, LASTWORD);
+	if (match.size() > 0) {
+		return match.str(0);
+	}
+	return "";
+}
+
+string ignoreEmptySpaces(string line) {
+	regex BEFORE_EMPTY("^.*\\S(?=\\s*$)");
+	smatch match;
+	regex_search(line, match, BEFORE_EMPTY);
+	if (match.size() > 0) {
+		return match.str(0);
+	}
+	return "";
 }
 
