@@ -22,5 +22,5 @@ struct cpi
 
 string typeI(string, /*map<string, unsigned int>*/ int ,/* map<string, unsigned int>*/ int, unsigned short);
 string typeJ(string, unsigned int);
-int cpiMed(int);
+void cpiMed(void);
 string convertToHexa(string);
