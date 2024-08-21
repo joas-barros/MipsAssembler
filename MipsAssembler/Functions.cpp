@@ -27,6 +27,9 @@ map<string, Func> functionsMap = {
 	{"mul", {R, 28, 0, 0, 0, 0, 2}}
 };
 
+const vector<string> typeJInstructions = { "j", "jal" };
+const vector<string> typeIInstructions = { "beq", "bne", "addi", "addiu", "andi", "ori", "slti", "sltiu", "lui", "lw", "sw" };
+
 
 string bitRFunction(Func function) {
 	string op = decimalToBinary(function.opCode, 6);
@@ -78,6 +81,10 @@ Func treatingRFunction(string line) {
 string assembling(string line, map<string, int> labels, int currentLine)
 {
 	string funcName = getFunction(line);
+
+	// se o que achar não for uma função
+	if (functionsMap.find(funcName) == functionsMap.end() && find(typeJInstructions.begin(), typeJInstructions.end(), funcName) == typeJInstructions.end() && find(typeIInstructions.begin(), typeIInstructions.end(), funcName) == typeIInstructions.end())
+		return "";
 
 	if (functionsMap.find(funcName) != functionsMap.end())
 		return bitRFunction(treatingRFunction(line));

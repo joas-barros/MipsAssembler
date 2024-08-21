@@ -30,7 +30,8 @@ int main() {
 	while (getline(fin, line)) {
 		currentLine++;
 		lineWithoutComents = ignoreComents(line);
-		fout << assembling(lineWithoutComents, labels, currentLine) << endl;
+		if (lineWithoutComents != "")
+			fout << assembling(lineWithoutComents, labels, currentLine) << endl;
 	}
 
 	fin.close();
