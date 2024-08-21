@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="code.asm" />
+    <None Include="code2.asm" />
     <None Include="cpi.csv" />
     <None Include="exemple.bin" />
   </ItemGroup>

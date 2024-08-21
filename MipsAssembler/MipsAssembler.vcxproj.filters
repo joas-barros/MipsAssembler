@@ -55,6 +55,9 @@
     <None Include="exemple.bin">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="code2.asm">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="opcode.txt">

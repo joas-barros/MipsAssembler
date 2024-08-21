@@ -6,12 +6,12 @@
 using namespace std;
 
 int main() {
-	// imprimir a funÁ„o da cada linha do arquivo
+	// imprimir a fun√ß√£o da cada linha do arquivo
 	string file = "TesteSilvio.asm";
 
 	map<string, int> labels = getLabels(file);
 
-	// retirar a extens„o do arquivo
+	// retirar a extens√£o do arquivo
 	string out = file.substr(0, file.find("."));
 	out += ".bin";
 
@@ -21,7 +21,7 @@ int main() {
 	ifstream fin;
 	fin.open(file);
 
-	int cpim = cpiMed(5, file);
+
 
 	string line, lineWithoutComents, assembledLine;
 	int currentLine = 0;
