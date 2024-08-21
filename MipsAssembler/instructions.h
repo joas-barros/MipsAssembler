@@ -3,7 +3,6 @@
 #include <sstream>
 #include <bitset>
 #include <vector>
-
 using namespace std;
 
 struct opcode
@@ -23,4 +22,3 @@ struct cpi
 string typeI(string,int, int, unsigned short);
 string typeJ(string, unsigned int);
 void cpiMed(string);
-string convertToHexa(string);

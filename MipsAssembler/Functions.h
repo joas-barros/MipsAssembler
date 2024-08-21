@@ -28,5 +28,7 @@ Func treatingRFunction(string);
 // Prototipo das funções de tratamento de instruções
 string bitRFunction(Func);
 
-string assembling(string);
+string assembling(string, map<string, int>, int);
+
+string assemblingHexa(string, map<string, int>, int);
 

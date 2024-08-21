@@ -6,12 +6,12 @@
 using namespace std;
 
 int main() {
-	// imprimir a funÁ„o da cada linha do arquivo
-	string file = "exemple.asm";
+	// imprimir a fun√ß√£o da cada linha do arquivo
+	string file = "TesteSilvio.asm";
 
 	map<string, int> labels = getLabels(file);
 
-	// retirar a extens„o do arquivo
+	// retirar a extens√£o do arquivo
 	string out = file.substr(0, file.find("."));
 	out += ".bin";
 
@@ -21,9 +21,19 @@ int main() {
 	ifstream fin;
 	fin.open(file);
 
-	string line;
+
+
+	string line, lineWithoutComents, assembledLine;
+	int currentLine = 0;
+
 	while (getline(fin, line)) {
-		fout << assembling(line);
+		
+		lineWithoutComents = ignoreEmptySpaces(ignoreComents(line));
+		assembledLine = assembling(lineWithoutComents, labels, currentLine);
+		if (assembledLine != "") {
+			currentLine++;
+			fout << assembledLine << endl;
+		}
 	}
 
 	fin.close();
