@@ -8,6 +8,7 @@
 
 void choiceB(string file) {
 
+	// Chama a função para pagar os labels do dódigo e sua respectiva linha (tabela de símbolos)
 	map<string, int> labels = getLabels(file);
 
 	// retirar a extensão do arquivo
@@ -25,20 +26,23 @@ void choiceB(string file) {
 	string line, lineWithoutComents, assembledLine;
 	int currentLine = 0;
 
+	// Ler as linhas do arquivo
 	while (getline(fin, line)) {
 
-		lineWithoutComents = ignoreEmptySpaces(ignoreComents(line));
-		assembledLine = assembling(lineWithoutComents, labels, currentLine);
-		if (assembledLine != "") {
+		lineWithoutComents = ignoreEmptySpaces(ignoreComents(line)); // Ignora os espaços vazios e os comentários
+		assembledLine = assembling(lineWithoutComents, labels, currentLine); // gera o código compilado
+		if (assembledLine != "") { // Caso a linha não tenha instrução, não escreve no arquivo
 			currentLine++;
 			fout << assembledLine << endl;
 		}
 	}
 
+	// Fecha os arquivos
 	fin.close();
 	fout.close();
 }
 
+// Versão da função em hexadecimal
 void choiceH(string file) {
 	map<string, int> labels = getLabels(file);
 

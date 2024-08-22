@@ -6,6 +6,8 @@
 #include <fstream>
 using namespace std;
 
+// Função principal
+
 int main(int argc, char** argv) {
 	
 	string filename = argv[1];
@@ -20,7 +22,7 @@ int main(int argc, char** argv) {
 		return 0;
 	}
 
-	cpiMed(filename);
+	cpiMed(filename); // Mostra o cpi por instrução e médio
 
 	return 0;
 }
