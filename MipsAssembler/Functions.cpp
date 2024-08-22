@@ -3,8 +3,10 @@
 #include "Getters.h"
 #include "instructions.h"
 
+// Posição inicial de memória
 const int initialAddress = 0x00400000;
 
+// Mapa de funções do tipo R com seus respectivos códigos para pegar o opcode e funct
 map<string, Func> functionsMap = {
 	{"sll", { 0, 0, 0, 0, 0, 0}},
 	{"srl", { 0, 0, 0, 0, 0, 2}},
@@ -27,12 +29,15 @@ map<string, Func> functionsMap = {
 	{"mul", {28, 0, 0, 0, 0, 2}}
 };
 
-
+// Vetor com todas as instruções possíveis
 const vector <string> allInstructions = { "j", "jal",
 "beq", "bne", "addi", "addiu", "andi", "ori", "slti", "sltiu", "lui", "lw", "sw",
 "sll", "srl", "jr", "mfhi", "mthi", "mflo", "mult", "multu", "div", "divu", "add", "addu", "sub", "subu", "and", "or", "slt", "sltu", "mul" };
 
+// Função que retorna a string binária de uma instrução do tipo R
 string bitRFunction(Func function) {
+
+	// Converte para binário conforme o tamanho de cada campo
 	string binaryOp = bitset<6>(function.opCode).to_string();
 	string binaryRs = bitset<5>(function.rs).to_string();
 	string binaryRt = bitset<5>(function.rt).to_string();
@@ -45,12 +50,16 @@ string bitRFunction(Func function) {
 	return binary;
 }
 
+// Função que trata as instruções do tipo R
 Func treatingRFunction(string line) {
+
 	string funcName = getFunction(line);
 	Func function = functionsMap[funcName];
 	vector<int> registers = getRegister(line);
 	int shamt = getImediate(line);
 
+	// Atribui os valores dos registradores conforme a função
+	// dependendo da função a posição dos registradores no binário pode ser definido de forma diferente
 	if (funcName == "sll" || funcName == "srl")
 	{
 		function.rd = registers[0];
@@ -81,17 +90,22 @@ Func treatingRFunction(string line) {
 	return function;
 }
 
+// Função para ler as instruções do tipo I
 string typeI(string nameOP, int rs, int rt, unsigned short address)
 {
+	// Abre o arquivo com os opcodes
 	ifstream fin;
+	// Inicializa um vetor do tipo opcode, que guarda o nome da instrução e seu valor
 	opcode opI[11]; int i = 0;
 	fin.open("opcode.txt");
+	// Teste para verificar se o arquivo foi lido corretamente
 	if (!fin.is_open())
 	{
 		cout << "Abertura do .txt falhou!";
 		exit(EXIT_FAILURE);
 	}
 
+	// Ler do arquivo e salva na variável opI
 	for (int i = 0; i < 11; i++)
 	{
 		fin >> opI[i].name;
@@ -99,6 +113,7 @@ string typeI(string nameOP, int rs, int rt, unsigned short address)
 	}
 	fin.close();
 
+	// Teste para achar a posição do vetor que está a instrução passada como parâmetro
 	for (int j = 0; j < 11; j++)
 	{
 		if (nameOP == opI[j].name) {
@@ -106,6 +121,7 @@ string typeI(string nameOP, int rs, int rt, unsigned short address)
 		}
 	}
 
+	// Converte para binário cada valor de acordo com sua respectiva quantidade de bits 
 	string binaryOP = bitset<6>(opI[i].value).to_string();
 	string binaryRS = bitset<5>(rs).to_string();
 	string binaryRT = bitset<5>(rt).to_string();
@@ -113,6 +129,7 @@ string typeI(string nameOP, int rs, int rt, unsigned short address)
 
 	string binary;
 
+	// Junta tudo para forma um binário de 32 bits
 	binary.append(binaryOP);
 	binary.append(binaryRS);
 	binary.append(binaryRT);
@@ -121,10 +138,12 @@ string typeI(string nameOP, int rs, int rt, unsigned short address)
 	return binary;
 }
 
+// Função que retorna a string binária de uma instrução do tipo J
 string typeJ(string nameOP, unsigned int address)
 {
 	string binary, binaryOP;
 
+	// Condicional para verificar qual intrução é, convertendo para binário de acordo com sua quantidade de bits
 	if (nameOP == "jal")
 	{
 		binaryOP = bitset<6>(3).to_string();
@@ -134,41 +153,49 @@ string typeJ(string nameOP, unsigned int address)
 		binaryOP = bitset<6>(2).to_string();
 	}
 
+	// Converte o endereço para binário  
 	string binaryAD = bitset<26>(address).to_string();
 
+	// Junta tudo para forma um binário de 32 bits
 	binary.append(binaryOP);
 	binary.append(binaryAD);
 
 	return binary;
 }
 
+// Função que monta o binario conforme o tipo
 string assembling(string line, map<string, int> labels, int currentLine)
 {
+	// Pega o nome da função
 	string funcName = getFunction(line);
 
-	// se o que achar não for uma função
+	// se o que achar não for uma função válida, retorna vazio para ser posteriormente tratada
 	if (find(allInstructions.begin(), allInstructions.end(), funcName) == allInstructions.end())
 		return "";
 
+	// se for uma função do tipo R, chama a função que trata as funções do tipo R
 	if (functionsMap.find(funcName) != functionsMap.end())
 		return bitRFunction(treatingRFunction(line));
+	// Trata funções do tipo j
 	else if (funcName == "j" || funcName == "jal")
 	{
 		string label = getLastWord(line);
-		int labelAddress = labels[label];
+		int labelAddress = labels[label]; // pega a linha do label
 
-		int address = labelAddress + initialAddress / 4;
+		int address = labelAddress + initialAddress / 4;  // Calcula o endereço conforme o endereço inicial por se tratar de um endereço incondicional
 
 		return typeJ(funcName, address);
 	}
+	// Trata funções do tipo I (as que sobraram)
 	else {
 		vector<int> registers = getRegister(line);
 		if (funcName == "beq" || funcName == "bne")
 		{
 			int rs = registers[0];
 			int rt = registers[1];
-			int labelAddress = labels[getLastWord(line)];
-			int address = labelAddress - (currentLine + 1);
+
+			int labelAddress = labels[getLastWord(line)]; // pega a linha da label
+			int address = labelAddress - (currentLine + 1); // usando PC como referencia
 			return typeI(funcName, rs, rt, address);
 		}
 		else if (funcName == "addi" || funcName == "addiu" || funcName == "andi" || funcName == "ori" || funcName == "slti" || funcName == "sltiu")
@@ -194,6 +221,7 @@ string assembling(string line, map<string, int> labels, int currentLine)
 	}
 }
 
+// Função que escreve a instrução em hexadecimal
 string assemblingHexa(string line, map<string, int> labels, int currentLine) {
 	string binary = assembling(line, labels, currentLine);
 	return convertToHexa(binary);

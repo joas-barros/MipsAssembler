@@ -5,6 +5,8 @@
 #include <vector>
 using namespace std;
 
+// Módulo para definir a função que calcula o cpi médio
+
 struct opcode
 {
 	string name;

@@ -1,8 +1,9 @@
 #include "Getters.h"
 #include <fstream>
 
+// Função para pegar os labels do código
 map<string, int> getLabels(string codeName) {
-	regex LABEL("(\\w*):");
+	regex LABEL("(\\w*):"); // Regex que retorna a palavra acompanhada de dois pontos
 	map<string, int> labels;
 	ifstream codeFile;
 	codeFile.open(codeName);
@@ -10,16 +11,15 @@ map<string, int> getLabels(string codeName) {
 	int lineNum = 0;
 	while(getline(codeFile, codeLine)){
 
-		string line = ignoreComents(codeLine);
-		// usando regex para pegar o label
+		string line = ignoreComents(codeLine); // Ignora os comentários
 		smatch match;
 		regex_search(line, match, LABEL);
 		if(match.size() > 0){
-			labels[match.str(1)] = lineNum;
-			lineNum++;
+			labels[match.str(1)] = lineNum; // Adiciona o label na tabela de símbolos e sua linha
+			lineNum++; // Incrementa a linha
 		}
 		else if (getFunction(line) != "") {
-			lineNum++;
+			lineNum++; // Incrementa a linha se não tiver label e tiver função, estrategia para ignorar linhas vazias
 		}
 	}
 	codeFile.close();
@@ -27,19 +27,20 @@ map<string, int> getLabels(string codeName) {
 }
 
 string getFunction(string line) {
-	regex FUNCTION("^(?:\\w+:)?\\s*(\\w+)");
+	regex FUNCTION("^(?:\\w+:)?\\s*(\\w+)"); // Regex para retornar a primeira palavra da linha, caso não seja um label
 	smatch match;
 	regex_search(line, match, FUNCTION);
 	if(match.size() > 0){
 		return match.str(1);
 	}
-	return "";
+	return ""; // Retorna vazio caso não encontre nenhuma função
 }
 
 vector<int> getRegister(string line) {
 
-	regex REGISTER("[$]\\d+|[$].\\d+");
+	regex REGISTER("[$]\\d+|[$].\\d+"); // Regex para retornar algo que começa com $
 
+	// Possiveis registradores encontrados e seus valores
 	map<string, int> REGISTER_MAP = {
 	{"$zero", 0},
 	{"$at", 1},
@@ -102,17 +103,17 @@ vector<int> getRegister(string line) {
 	while (regex_search(line, matches, REGISTER))
 	{
 		for (const auto& match : matches) {
-			int reg = REGISTER_MAP.at(match.str());
-			registers.push_back(reg);
+			int reg = REGISTER_MAP.at(match.str()); // primeira ocorrencia do match
+			registers.push_back(reg); // Adiciona o valor numerico do registrador na lista
 
 		}
-	line = matches.suffix().str();
+	line = matches.suffix().str(); // Pega o resto da string
 	}
 	return registers;
 }
 
 int getImediate(string line) {
-	regex IMEDIATE(" \\d*(\\n|$| )");
+	regex IMEDIATE(" \\d*(\\n|$| )"); // regex para retornar sequencias de dígitos que terminam com espaço, nova linha ou fim de linha
 	smatch match;
 	regex_search(line, match, IMEDIATE);
 	if(match.size() > 0){
@@ -122,12 +123,12 @@ int getImediate(string line) {
 }
 
 string ignoreComents(string line) {
-	regex COMMENT("#.*");
-	return regex_replace(line, COMMENT, "");
+	regex COMMENT("#.*"); // Regex para retornar tudo que começa com #
+	return regex_replace(line, COMMENT, ""); // Ignora tudo que vem depois do #
 }
 
 string getLastWord(string line) {
-	regex LASTWORD("\\b\\w+\\b(?=\\s*$)");
+	regex LASTWORD("\\b\\w+\\b(?=\\s*$)"); // Regex para retornar a última palavra da linha
 	smatch match;
 	regex_search(line, match, LASTWORD);
 	if (match.size() > 0) {
@@ -137,7 +138,7 @@ string getLastWord(string line) {
 }
 
 string ignoreEmptySpaces(string line) {
-	regex BEFORE_EMPTY("^.*\\S(?=\\s*$)");
+	regex BEFORE_EMPTY("^.*\\S(?=\\s*$)"); // Regex para retornar tudo que vem antes do espaço final
 	smatch match;
 	regex_search(line, match, BEFORE_EMPTY);
 	if (match.size() > 0) {

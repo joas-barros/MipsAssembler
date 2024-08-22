@@ -6,6 +6,8 @@
 #include "Conversor.h"
 using namespace std;
 
+// Módulo para definir as funções de tratamento de instruções
+
 struct Func
 {
 	int opCode;
@@ -16,15 +18,16 @@ struct Func
 	int funct;
 };
 
-
+// Prototipo das funções de tratamento de instruções
 Func treatingRFunction(string);
 
 string typeI(string, int, int, unsigned short);
 string typeJ(string, unsigned int);
 
-// Prototipo das funções de tratamento de instruções
+
 string bitRFunction(Func);
 
+// Prototipo das funções de montagem
 string assembling(string, map<string, int>, int);
 
 string assemblingHexa(string, map<string, int>, int);

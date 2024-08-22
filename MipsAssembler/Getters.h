@@ -5,6 +5,7 @@
 #include <vector>
 using namespace std;
 
+// Módulo para definir as funções de tratamento de texto
 
 map<string, int> getLabels(string);
 
