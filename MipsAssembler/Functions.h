@@ -1,19 +1,13 @@
 #include <string>
 #include <map>
+#include <fstream>
+#include <bitset>
 #include "Getters.h"
 #include "Conversor.h"
 using namespace std;
 
-enum Types
-{
-	R,
-	I,
-	J
-};
-
 struct Func
 {
-	Types type;
 	int opCode;
 	int rs;
 	int rt;
@@ -24,6 +18,9 @@ struct Func
 
 
 Func treatingRFunction(string);
+
+string typeI(string, int, int, unsigned short);
+string typeJ(string, unsigned int);
 
 // Prototipo das funções de tratamento de instruções
 string bitRFunction(Func);

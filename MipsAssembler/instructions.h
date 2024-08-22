@@ -19,6 +19,5 @@ struct cpi
 };
 
 
-string typeI(string,int, int, unsigned short);
-string typeJ(string, unsigned int);
+
 void cpiMed(string);

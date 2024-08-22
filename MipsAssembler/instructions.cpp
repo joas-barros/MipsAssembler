@@ -4,79 +4,10 @@
 #include <fstream>
 using namespace std;
 
-ifstream fin;
-
-// Função para ler as instruções do tipo I
-string typeI(string nameOP, int rs, int rt, unsigned short address)
-{
-    // Inicializa um vetor do tipo opcode, que guarda o nome da instrução e seu valor
-    opcode opI[11]; int i = 0;
-    // Abre o arquivo que contém os valores de opcode de cada instrução
-    fin.open("opcode.txt");
-    // Teste para verificar se o arquivo foi lido corretamente
-    if (!fin.is_open()) 
-    {
-        cout << "Abertura do .txt falhou!";
-        exit(EXIT_FAILURE);
-    }
-    // Ler do arquivo e salva na variável opI
-    for (int i = 0; i < 11; i++)
-    {
-        fin >> opI[i].name;
-        fin >> opI[i].value;
-    }
-    fin.close(); 
-
-    // Teste para achar a posição do vetor que está a instrução passada como parâmetro
-    for (int j = 0; j < 11; j++)
-    {
-        if(nameOP == opI[j].name) {
-            i = j;
-        }
-    }
-
-    // Converte para binário cada valor de acordo com sua respectiva quantidade de bits 
-    string binaryOP = bitset<6>(opI[i].value).to_string();
-    string binaryRS = bitset<5>(rs).to_string();
-    string binaryRT = bitset<5>(rt).to_string();
-    string binaryAD = bitset<16>(address).to_string();
-
-    string binary;
-    // Junta tudo para forma um binário de 32 bits
-    binary.append(binaryOP);
-    binary.append(binaryRS);
-    binary.append(binaryRT);
-    binary.append(binaryAD);
-
-    return binary;
-}
-
-// Função para ler as instruções do tipo J
-string typeJ(string nameOP, unsigned int address)
-{ 
-    string binary, binaryOP;
-    // Condicional para verificar qual intrução é, convertendo para binário de acordo com sua quantidade de bits
-    if (nameOP == "jal")
-    {
-        binaryOP = bitset<6>(3).to_string();
-    }
-    else 
-    {
-        binaryOP = bitset<6>(2).to_string();
-    }
-    // Converte o endereço para binário  
-    string binaryAD = bitset<26>(address).to_string();
-    
-    // Junta tudo para forma um binário de 32 bits
-    binary.append(binaryOP);
-    binary.append(binaryAD);
-
-    return binary;
-}
-
 void cpiMed(string fileName)
 {
-    // Variável do tipo cpi que guarda o nome, a quantidade de vezes utilizado e o valor do ciclo, respectivamente, de cada instrução 
+    ifstream fin;
+  // Variável do tipo cpi que guarda o nome, a quantidade de vezes utilizado e o valor do ciclo, respectivamente, de cada instrução
     cpi informationCPI[] = { {"sll",0,0},{"srl",0,0},{"jr",0,0},{"mfhi",0,0},{"mflo",0,0},{"mult",0,0},{"multu",0,0},{"div",0,0},{"divu",0,0},
         {"add",0,0},{"addu",0,0},{"sub",0,0},{"subu",0,0},{"and",0,0},{"or",0,0},{"slt",0,0},{"sltu",0,0},{"mul",0,0},{"beq",0,0},
         {"bne",0,0},{"addi",0,0},{"addiu",0,0},{"slti",0,0},{"sltiu",0,0},{"andi",0,0},{"ori",0,0},{"lui",0,0},{"lw",0,0},{"sw",0,0},
