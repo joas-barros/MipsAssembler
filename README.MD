@@ -154,5 +154,5 @@ Quantidades por tipo de instruções:
 
 - Support our development team by following them
 
-- **Joás Gabriel** - [@nickolas-silva](https://github.com/joas-barros)
+- **Joás Gabriel** - [@joas-barros](https://github.com/joas-barros)
 - **Lucas Silva** - [@Lucassilv7](https://github.com/Lucassilv7) 
