@@ -4,13 +4,13 @@
 #include <fstream>
 using namespace std;
 
-
-
 void cpiMed(string fileName)
 {
     ifstream fin;
 
+
     // Variável do tipo cpi que guarda o nome, a quantidade de vezes utilizado e o valor do ciclo, respectivamente, de cada instrução
+
     cpi informationCPI[] = { {"sll",0,0},{"srl",0,0},{"jr",0,0},{"mfhi",0,0},{"mflo",0,0},{"mult",0,0},{"multu",0,0},{"div",0,0},{"divu",0,0},
         {"add",0,0},{"addu",0,0},{"sub",0,0},{"subu",0,0},{"and",0,0},{"or",0,0},{"slt",0,0},{"sltu",0,0},{"mul",0,0},{"beq",0,0},
         {"bne",0,0},{"addi",0,0},{"addiu",0,0},{"slti",0,0},{"sltiu",0,0},{"andi",0,0},{"ori",0,0},{"lui",0,0},{"lw",0,0},{"sw",0,0},
@@ -29,7 +29,7 @@ void cpiMed(string fileName)
     // Ler a linha de cabeçalho e ignora o próximo caractere
     fin >> nameInstru;
     fin.ignore(1);
-    
+
     // Lê o nome de cada instrução do arquivo 
     while (getline(fin, nameInstru, ',')) {
         for (int i = 0; i < 31; i++)
@@ -39,7 +39,9 @@ void cpiMed(string fileName)
             if (nameInstru == informationCPI[i].name)
             {
                 fin >> informationCPI[i].value;
+
                 i = 32; // saido do loop
+
             }
         }
         fin.ignore(1);
@@ -86,6 +88,8 @@ void cpiMed(string fileName)
     {
         for (int i = 0; i < 31; i++)
         {
+            // Quando ele achar o nome da instrução, que está salvo na variável do início, referente ao nome salvo no vetor 
+            // (o que foi criado para uso futuro) calcula a equação do somatório
             if (nameInst[j] == informationCPI[i].name)
             {
                 // Quando ele achar o nome da instrução, que está salvo na variável do início, referente ao nome salvo no vetor 
@@ -94,7 +98,9 @@ void cpiMed(string fileName)
                 i = 32;
             }
         }
+
         sum += eq; // Faz o somatório
+
     }
     // Obtém o cpi médio
     cpi = sum / totalInstru;
