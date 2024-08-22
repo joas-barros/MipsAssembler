@@ -4,7 +4,6 @@
 string convertToHexa(string bin) {
 
 	// Cria uma vari�vel com o tamanho de 32 bits e o valor do bin�rio passado como par�metro
-
 	bitset<32> set(bin);
 	// Associa res a um stream permitindo que leia a string como se fosse um stream (como cin). 
 	stringstream res;
@@ -14,7 +13,6 @@ string convertToHexa(string bin) {
 
 
 	// Salva a string que est� no res na vari�vel hexa
-
 	string hexa = res.str();
 
 	// Caso o n�mero de digitos sehja menor que 8, completa com 0
@@ -26,4 +24,5 @@ string convertToHexa(string bin) {
 
 	return hexa;
 }
+
  

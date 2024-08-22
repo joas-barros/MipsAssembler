@@ -224,5 +224,8 @@ string assembling(string line, map<string, int> labels, int currentLine)
 // Função que escreve a instrução em hexadecimal
 string assemblingHexa(string line, map<string, int> labels, int currentLine) {
 	string binary = assembling(line, labels, currentLine);
+	if (binary == "")
+		return "";
 	return convertToHexa(binary);
 }
+
